@@ -6,3 +6,18 @@ models:
       config:
           enabled: true
           tags: uticen_calls
+    - name: uticen_first_caller
+      description: "uticen first calling agent"
+      config:
+          enabled: true
+          tags: uticen_first_caller
+    - name: uticen_login count
+      description: "client login count"
+      config:
+          enabled: true
+          tags: uticen_login count
+    - name: uticen_clients_with_brand
+      description: "uticen clients"
+      config:
+          enabled: true
+          tags: uticen_clients_with_brand
