@@ -74,13 +74,3 @@ LEFT JOIN sales_uticen.uticen_first_caller fc ON fc.client=cl.id
 LEFT JOIN sales_uticen.uticen_login_count lc ON lc.client=cl.id
 LEFT JOIN imports.uticen_statuses st ON st.id=cl.status
 LEFT JOIN imports.uticen_brands br ON br.id=cl.brand
-where 
-concat_ws(' ', first_name, last_name) NOT LIKE '% Test %'
-AND concat_ws(' ', first_name, last_name) NOT LIKE '% test %'
-AND concat_ws(' ', first_name, last_name) NOT LIKE '% TEST %'
-AND concat_ws(' ', first_name, last_name) NOT LIKE '%TEST %'
-AND concat_ws(' ', first_name, last_name) NOT LIKE '%test %'
-AND concat_ws(' ', first_name, last_name) NOT LIKE '%Test %'
-AND (concat_ws(' ', first_name, last_name) NOT LIKE '% Test%' OR last_name LIKE '%Testut%')
-AND concat_ws(' ', first_name, last_name) NOT LIKE '% TEST%' 
-AND concat_ws(' ', first_name, last_name) NOT LIKE '% test%'
