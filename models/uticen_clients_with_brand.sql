@@ -22,7 +22,7 @@ select distinct
  NULL AS brm_id,
  to_jsonb(general_info::json)->>'dialerId' as dialer_id,
  NULL AS email,
- NULL AS ftd_date,--ATTENTION WAITING FOR FIX
+fd.ftd_date,
  NULL AS deposit_amount,
  NULL AS withdrawal_amount,
  ca.last_call_date,
@@ -74,3 +74,4 @@ LEFT JOIN sales_uticen.uticen_first_caller fc ON fc.client=cl.id
 LEFT JOIN sales_uticen.uticen_login_count lc ON lc.client=cl.id
 LEFT JOIN imports.uticen_statuses st ON st.id=cl.status
 LEFT JOIN imports.uticen_brands br ON br.id=cl.brand
+LEFT JOIN sales_uticen.uticen_ftd_date  fd ON fd.client_id=cl.id

@@ -21,3 +21,48 @@ models:
       config:
           enabled: true
           tags: uticen_clients_with_brand
+    - name: uticen_transactions_with_brand
+      description: "uticen transactions incl. incentives"
+      config:
+          enabled: true
+          tags: uticen_transactions_with_brand
+    - name: uticen_admin_users
+      description: "uticen admin users"
+      config:
+          enabled: true
+          tags: uticen_admin_users
+    - name: uticen_agent_name_ftd
+      description: "uticen agent name ftd"
+      config:
+          enabled: true
+          tags: uticen_agent_name_ftd
+    - name: uticen_agent_name_current
+      description: "uticen agent name current"
+      config:
+          enabled: true
+          tags: uticen_agent_name_current
+    - name: uticen_agent_name_final
+      description: "uticen agent name final"
+      config:
+          enabled: true
+          tags: uticen_agent_name_final
+    - name: uticen_ftd_date
+      description: "uticen identifying the ftds"
+      config:
+          enabled: true
+          tags: uticen_ftd_date
+    - name: uticen_first_approved_date
+      description: "uticen first deposit date"
+      config:
+          enabled: true
+          tags: uticen_first_approved_date
+    - name: uticen_first_approved_date_more_1k
+      description: "uticen first deposit more than 1k"
+      config:
+          enabled: true
+          tags: uticen_first_approved_date_more_1k
+    - name: uticen_first_approved_date_less_1k
+      description: "uticen first deposit less than 1k"
+      config:
+          enabled: true
+          tags: uticen_first_approved_date_less_1k
