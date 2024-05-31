@@ -31,7 +31,7 @@ concat_ws('_',cl.brand_name,te.name) AS brand_pool,
 concat_ws('_',t.agent,cl.brand_name) AS agent_id_brand,
 concat_ws('_',tra.client,cl.brand_name,CAST(t.inserted_date as date)) AS client_id_brand_day,
 NULL AS client_id_brand_day_time,
-NULL AS client_id_brand_transid_isftd, --ATTENTION
+t.id AS client_id_brand_transid_isftd,
 NULL AS client_id_brand_day_isftd, --ATTENTION
 NULL AS client_id_brand_day_isftd_type, --ATTENTION
 t.agent AS agent_id_brand_final, --ATTENTION FULL LOGIC
@@ -87,7 +87,7 @@ concat_ws('_',cl.brand_name,te.name) AS brand_pool,
 concat_ws('_',cl.first_calling_agent,cl.brand_name) AS agent_id_brand,
 concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) AS client_id_brand_day,
 NULL AS client_id_brand_day_time,
-NULL AS client_id_brand_transid_isftd, --ATTENTION
+(to_jsonb(transaction_details::json)->>'id')::bigint AS client_id_brand_transid_isftd, --ATTENTION
 NULL AS client_id_brand_day_isftd, --ATTENTION
 NULL AS client_id_brand_day_isftd_type, --ATTENTION
 cl.first_calling_agent AS agent_id_brand_final, --ATTENTION FULL LOGIC
