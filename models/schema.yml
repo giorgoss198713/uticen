@@ -66,3 +66,68 @@ models:
       config:
           enabled: true
           tags: uticen_first_approved_date_less_1k
+    - name: uticen_agent_name_redepositor
+      description: "uticen agent name redepositor"
+      config:
+          enabled: true
+          tags: uticen_agent_name_redepositor
+    - name: uticen_conversion_rate_denominator
+      description: "uticen ftds details"
+      config:
+          enabled: true
+          tags: uticen_conversion_rate_denominator
+    - name: uticen_pv_numerator
+      description: "uticen net amount details"
+      config:
+          enabled: true
+          tags: uticen_pv_numerator
+    - name: uticen_ftd_amount_buckets
+      description: "uticen ftd buckets"
+      config:
+          enabled: true
+          tags: uticen_ftd_amount_buckets
+    - name: uticen_ftd_deposits
+      description: "uticen ftd deposit details"
+      config:
+          enabled: true
+          tags: uticen_ftd_deposits
+    - name: uticen_non_ftd_deposits
+      description: "uticen non ftd deposit details"
+      config:
+          enabled: true
+          tags: uticen_non_ftd_deposits
+    - name: uticen_non_ftd_deposits_yesterday
+      description: "uticen non ftd deposit for yesterday details"
+      config:
+          enabled: true
+          tags: uticen_non_ftd_deposits_yesterday
+    - name: uticen_non_ftd_withdrawals
+      description: "uticen non ftd withdrawal details"
+      config:
+          enabled: true
+          tags: uticen_non_ftd_withdrawals
+    - name: uticen_non_ftd_withdrawals_yesterday
+      description: "uticen non ftd withdrawal for yesterday details"
+      config:
+          enabled: true
+          tags: uticen_non_ftd_withdrawals
+    - name: uticen_non_ftd_transactions
+      description: "uticen non ftd transactions"
+      config:
+          enabled: true
+          tags: uticen_non_ftd_transactions
+    - name: uticen_non_ftd_total
+      description: "uticen non ftd total"
+      config:
+          enabled: true
+          tags: uticen_non_ftd_total
+    - name: uticen_sales_depositors
+      description: "uticen sales depositors report"
+      config:
+          enabled: true
+          tags: uticen_sales_depositors
+    - name: uticen_redepositor_amounts
+      description: "uticen redepositor amounts"
+      config:
+          enabled: true
+          tags: uticen_redepositor_amounts
