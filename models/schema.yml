@@ -131,3 +131,53 @@ models:
       config:
           enabled: true
           tags: uticen_redepositor_amounts
+    - name: uticen_summary_table
+      description: "uticen summary table"
+      config:
+          enabled: true
+          tags: uticen_summary_table
+    - name: uticen_summary_agent
+      description: "uticen summary for agents"
+      config:
+          enabled: true
+          tags: uticen_summary_agent
+    - name: uticen_campaign_table
+      description: "uticen campaign table"
+      config:
+          enabled: true
+          tags: uticen_campaign_table
+    - name: uticen_chargeback_clients
+      description: "uticen chargeback clients transactions"
+      config:
+          enabled: true
+          tags: uticen_chargeback_clients_transactions
+    - name: uticen_total_client_sum_zero
+      description: "uticen clients with zero balance"
+      config:
+          enabled: true
+          tags: uticen_total_client_sum_zero
+    - name: uticen_refunded_clients_transactions
+      description: "uticen clients with zero balance"
+      config:
+          enabled: true
+          tags: uticen_refunded_clients_transactions
+    - name: uticen_non_ftd_withdrwals_cb
+      description: "uticen wds no refund or cb"
+      config:
+          enabled: true
+          tags: uticen_non_ftd_withdrwals_cb
+    - name: uticen_summary_calls
+      description: "uticen summary calls table"
+      config:
+          enabled: true
+          tags: uticen_summary_calls
+    - name: uticen_max_call_date
+      description: "uticen max call date"
+      config:
+          enabled: true
+          tags: uticen_max_call_date
+    - name: uticen_calls_count_all
+      description: "uticen all calls count"
+      config:
+          enabled: true
+          tags: uticen_calls_count_all

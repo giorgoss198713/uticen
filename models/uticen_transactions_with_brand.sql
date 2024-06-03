@@ -21,7 +21,7 @@ to_jsonb(psp_details::json)->>'paymentMethod' as payment_method,
 to_jsonb(psp_details::json)->>'pspName' as psp_name, -- EXTRA COLUMN
 INITCAP(div.name) AS desk_manager,
 grp.name AS group_manager, --EXTRA COLUMN
-NULL AS language, --ATTENTION
+CASE WHEN cl.language='en' THEN 'ENG' ELSE cl.language END AS language,
 cl.brand_name AS brand_name,
 NULL AS psp_id_brand,
 concat_ws('_',tra.client,cl.brand_name) AS client_id_brand,
@@ -74,10 +74,10 @@ true as is_ftd,
 cl.pool as current_pool_transformed,
 cl.first_calling_pool_transformed as pool_transformed,
 to_jsonb(transaction_details::json)->>'paymentMethod' as payment_method,
-to_jsonb(transaction_details::json)->>'psp' as psp_name, -- QUESTION TO GUY
+to_jsonb(transaction_details::json)->>'psp' as psp_name,
 INITCAP(div.name) AS desk_manager,
 grp.name AS group_manager,
-NULL AS language, --ATTENTION
+CASE WHEN cl.language='en' THEN 'ENG' ELSE cl.language END AS language,
 cl.brand_name AS brand_name,
 NULL AS psp_id_brand,
 concat_ws('_',tra.client,cl.brand_name) AS client_id_brand,
