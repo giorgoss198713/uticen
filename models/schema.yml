@@ -181,3 +181,58 @@ models:
       config:
           enabled: true
           tags: uticen_calls_count_all
+    - name: uticen_non_asnwering_clients_all
+      description: "uticen all non answering clients"
+      config:
+          enabled: true
+          tags: uticen_non_asnwering_clients_all
+    - name: uticen_non_asnwering_pools
+      description: "uticen non answering pools"
+      config:
+          enabled: true
+          tags: uticen_non_asnwering_pools
+    - name: uticen_redepositor_client
+      description: "uticen redepositor client"
+      config:
+          enabled: true
+          tags: uticen_redepositor_client
+    - name: uticen_ta_with_brand
+      description: "uticen trading account balances"
+      config:
+          enabled: true
+          tags: uticen_ta_with_brand
+    - name: uticen_ftds_yesterday
+      description: "yesterdays ftds"
+      config:
+          enabled: true
+          tags: uticen_ftds_yesterday
+    - name: uticen_redepositor_amounts_atomix
+      description: "uticen redepositor amounts for atomix"
+      config:
+          enabled: true
+          tags: uticen_redepositor_amounts_atomix
+    - name: uticen_clients_notes
+      description: "uticen notes for clients"
+      config:
+          enabled: true
+          tags: uticen_clients_notes
+    - name: uticen_withdrawals_count_per_month
+      description: "uticen counting wds per month"
+      config:
+          enabled: true
+          tags: uticen_withdrawals_count_per_month
+    - name: uticen_deposits_count
+      description: "uticen counting deposits"
+      config:
+          enabled: true
+          tags: uticen_deposits_count
+    - name: uticen_calls_per_month
+      description: "uticen calls per month for brazil"
+      config:
+          enabled: true
+          tags: uticen_calls_per_month
+    - name: uticen_active_agents
+      description: "uticen active agents per month"
+      config:
+          enabled: true
+          tags: uticen_active_agents
