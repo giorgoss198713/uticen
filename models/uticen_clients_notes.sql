@@ -7,8 +7,8 @@ SELECT
     ntl.title as note_title,
     note,
     nt.created_date
-FROM imports.uticen_notes nt
-	JOIN imports.uticen_note_titles ntl ON ntl.id=nt.note_title
+FROM sales_uticen.notes nt
+	JOIN sales_uticen.note_titles ntl ON ntl.id=nt.note_title
 	LEFT JOIN sales_uticen.uticen_clients_with_brand cl ON cl.id=nt.client
 	LEFT JOIN sales_uticen.uticen_admin_users u ON u.user_id = nt.user_id
 WHERE

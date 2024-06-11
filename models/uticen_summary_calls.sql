@@ -1,6 +1,6 @@
 WITH distinct_rows AS (
 SELECT DISTINCT client, agent, extract(epoch from (finished_at - accepted_at))::int as duration, created_date, status
-from imports.uticen_calls
+from sales_uticen.calls
 )
 select 
 CAST(dr.created_date as date) AS created_day, u.username, NULL AS agent_name, concat_ws('_',dr.agent,c.brand_name) as agent_id_brand,
@@ -18,7 +18,7 @@ DATE_PART('SECOND', INTERVAL '1 second' * SUM(CASE WHEN dr.duration > 180 THEN d
     ) AS formatted_total_duration
 from distinct_rows dr
 JOIN sales_uticen.uticen_clients_with_brand c ON dr.client=c.id
-JOIN imports.uticen_agents ag ON ag.id=dr.agent
+JOIN sales_uticen.agents ag ON ag.id=dr.agent
 JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
 --JOIN imports.uticen_user_types ut ON u.type=ut.id
 --AND u.type IN ('1','4','7','12')

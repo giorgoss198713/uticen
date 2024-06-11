@@ -6,7 +6,7 @@ SELECT
   pnl.balance,
   abs(pnl.balance) as abs_balance
 FROM
-  imports.uticen_trading_accounts ta
-  LEFT JOIN imports.uticen_trading_accounts_pnl pnl ON pnl.login = ta.login
+  sales_uticen.trading_accounts ta
+  LEFT JOIN sales_uticen.trading_accounts_pnl pnl ON pnl.login = ta.login
   JOIN sales_uticen.uticen_transactions_with_brand twb ON ta.client = twb.client_id
 ORDER BY abs(pnl.balance) DESC

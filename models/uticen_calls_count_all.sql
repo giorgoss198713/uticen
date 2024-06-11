@@ -48,9 +48,9 @@ FROM
                 WHEN extract(epoch from (finished_at - accepted_at))::int <= 180 AND ca.status NOT IN ('Failed', 'Rejected', 'In progress') THEN 'Call Failed'
             END) AS call_result
         FROM
-            imports.uticen_calls ca
+            sales_uticen.calls ca
             JOIN sales_uticen.uticen_clients_with_brand cl ON ca.client=cl.id
-			JOIN imports.uticen_agents ag ON ag.id=ca.agent
+			JOIN sales_uticen.agents ag ON ag.id=ca.agent
 			JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
         WHERE 
             u.type=3

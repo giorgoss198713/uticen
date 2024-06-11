@@ -1,6 +1,6 @@
 WITH min_dates AS (
     SELECT client, MIN(accepted_at) AS first_call_date
-    FROM imports.uticen_calls
+    FROM sales_uticen.calls
     --WHERE client = 1061
     GROUP BY client
 )
@@ -10,13 +10,13 @@ SELECT
     te.name AS first_pool, 
     ca.accepted_at AS first_call_date
 FROM 
-    imports.uticen_calls ca
+    sales_uticen.calls ca
 LEFT JOIN 
-    imports.uticen_agents ag ON ca.agent = ag.id
+    sales_uticen.agents ag ON ca.agent = ag.id
 LEFT JOIN 
-    imports.uticen_users u ON u.id = ag.user_id
+    sales_uticen.users u ON u.id = ag.user_id
 LEFT JOIN 
-    imports.uticen_teams te ON te.id = ag.team
+    sales_uticen.teams te ON te.id = ag.team
 INNER JOIN 
     min_dates md ON ca.client = md.client AND ca.accepted_at = md.first_call_date
 WHERE 
