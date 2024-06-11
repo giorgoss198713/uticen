@@ -68,10 +68,10 @@ fd.ftd_date,
  ca.answered_calls,
  NULL as answered_binary,
  NULL AS answered_call
-FROM imports.uticen_clients cl
+FROM sales_uticen.clients cl
 LEFT JOIN sales_uticen.uticen_calls_summary ca ON ca.client=cl.id
 LEFT JOIN sales_uticen.uticen_first_caller fc ON fc.client=cl.id
 LEFT JOIN sales_uticen.uticen_login_count lc ON lc.client=cl.id
-LEFT JOIN imports.uticen_statuses st ON st.id=cl.status
-LEFT JOIN imports.uticen_brands br ON br.id=cl.brand
+LEFT JOIN sales_uticen.statuses st ON st.id=cl.status
+LEFT JOIN sales_uticen.brands br ON br.id=cl.brand
 LEFT JOIN sales_uticen.uticen_ftd_date  fd ON fd.client_id=cl.id

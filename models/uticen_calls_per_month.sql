@@ -43,9 +43,9 @@ SELECT
     COUNT(CASE WHEN DATE_TRUNC('day', ca.created_date) = DATE_TRUNC('day', CURRENT_DATE - (CURRENT_DATE - DATE_TRUNC('month', CURRENT_DATE)) + INTERVAL '30 days') THEN 1 END) AS "31"
 FROM
     sales_uticen.uticen_clients_with_brand c
- 	LEFT JOIN imports.uticen_calls ca ON ca.client=c.id
-	LEFT JOIN imports.uticen_agents ag ON ag.id=ca.agent
-	LEFT JOIN imports.uticen_agents ag1 ON ag.id=c.retention_agent
+ 	LEFT JOIN sales_uticen.calls ca ON ca.client=c.id
+	LEFT JOIN sales_uticen.agents ag ON ag.id=ca.agent
+	LEFT JOIN sales_uticen.agents ag1 ON ag.id=c.retention_agent
 	LEFT JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
 	LEFT JOIN sales_uticen.uticen_admin_users u1 ON u1.user_id=ag1.user_id
 WHERE
