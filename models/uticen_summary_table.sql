@@ -1,4 +1,5 @@
-SELECT twb.language, twb.brand_name, twb.pool_final, 
+SELECT 
+twb.language, twb.brand_name, twb.pool_final, 
 concat_ws('_',twb.brand_name,twb.pool_final) as brand_pool_final,
 count(distinct crd.min_client_id_brand_day) AS FTDs,
 count(distinct fad.client_id_brand_day) AS "Depositors",

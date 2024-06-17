@@ -142,7 +142,7 @@ WHEN sum(round(cast(twb.usd_amount as numeric),0))>349
 THEN '03. $400'
 END) AS ftd_bucket_9
 FROM
-  sales_uticen.uticen_transactions_with_brand twb
+sales_uticen.uticen_transactions_with_brand twb
 WHERE
   twb.is_ftd is true
   AND twb.type ='Deposit'

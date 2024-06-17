@@ -7,7 +7,7 @@ twb.currency,
 twb.amount,
 twb.usd_amount
 FROM
-  sales_uticen.uticen_transactions_with_brand  twb
+sales_uticen.uticen_transactions_with_brand  twb
 WHERE
   twb.is_ftd is true
   AND twb.type ='Deposit'

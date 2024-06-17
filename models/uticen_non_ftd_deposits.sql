@@ -1,4 +1,5 @@
-SELECT DISTINCT twb.usd_amount,
+SELECT 
+DISTINCT twb.usd_amount,
 twb.client_id_brand_transid_isftd,
 twb.client_id_brand,
 twb.approved_date

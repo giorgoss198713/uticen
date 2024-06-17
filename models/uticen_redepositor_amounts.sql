@@ -1,4 +1,5 @@
-SELECT DISTINCT
+SELECT 
+DISTINCT
 fad.client_id_brand,
 fad.client_id_brand_day,
 fad.transaction_date,

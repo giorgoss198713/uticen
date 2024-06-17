@@ -8,7 +8,7 @@ SELECT
 	null as work,
 	c.gender,
 	c.status,
-	c.deposit_amount as deposit,
+	c.deposit_amount::double precision as deposit,
 	u1.username as broker,
     COUNT(CASE WHEN DATE_TRUNC('day', ca.created_date) = DATE_TRUNC('day', CURRENT_DATE - (CURRENT_DATE - DATE_TRUNC('month', CURRENT_DATE))) THEN 1 END) AS "1",
     COUNT(CASE WHEN DATE_TRUNC('day', ca.created_date) = DATE_TRUNC('day', CURRENT_DATE - (CURRENT_DATE - DATE_TRUNC('month', CURRENT_DATE)) + INTERVAL '1 day') THEN 1 END) AS "2",
@@ -45,7 +45,7 @@ FROM
     sales_uticen.uticen_clients_with_brand c
  	LEFT JOIN sales_uticen.calls ca ON ca.client=c.id
 	LEFT JOIN sales_uticen.agents ag ON ag.id=ca.agent
-	LEFT JOIN sales_uticen.agents ag1 ON ag.id=c.retention_agent
+	LEFT JOIN sales_uticen.agents ag1 ON ag1.id=c.retention_agent
 	LEFT JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
 	LEFT JOIN sales_uticen.uticen_admin_users u1 ON u1.user_id=ag1.user_id
 WHERE

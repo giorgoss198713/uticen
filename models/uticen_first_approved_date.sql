@@ -1,11 +1,13 @@
 SELECT DISTINCT
   twb.client_id_brand_day,
+  twb.client_id_brand_transid_isftd,
+  twb.client_id_brand_day_time,
   twb.client_id_brand,
   twb.approved_day as transaction_date,
   cl.ftd_date,
-  NULL as ftd_date_referral,
+  NULL::date as ftd_date_referral,
+  twb.agent,
   twb.agent_id_brand_final,
-  twb.client_id_brand_transid_isftd,
   ROW_NUMBER() OVER (PARTITION BY client_id_brand_day ORDER BY twb.client_id_brand_transid_isftd) AS row_num,
   NULL as client_agent_id_brand,
   sum(twb.usd_amount) as usd_amount
@@ -32,4 +34,4 @@ WHERE
   AND twb.is_ftd is false
   AND twb.status ='Approved'
   AND twb.type = 'Deposit'
-GROUP BY twb.client_id_brand_day, twb.client_id_brand, twb.approved_day, cl.ftd_date, twb.agent_id_brand_final, twb.client_id, twb.client_id_brand_transid_isftd
+GROUP BY twb.client_id_brand_day, twb.client_id_brand, twb.approved_day, cl.ftd_date, twb.agent_id_brand_final, twb.client_id, twb.client_id_brand_transid_isftd, twb.agent, twb.client_id_brand_day_time

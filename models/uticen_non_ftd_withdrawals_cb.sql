@@ -7,7 +7,7 @@ FROM
   ON twb.client_id_brand_transid_isftd = cct.client_id_brand_transid_isftd
   LEFT JOIN sales_uticen.uticen_refunded_clients_transactions rft
   ON twb.client_id_brand_transid_isftd = rft.client_id_brand_transid_isftd
-    WHERE
+WHERE
   twb.is_ftd = 'f'
   AND twb.type = 'Withdrawal'
   AND cct.client_id_brand_transid_isftd IS NULL
