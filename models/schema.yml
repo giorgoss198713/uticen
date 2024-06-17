@@ -11,11 +11,11 @@ models:
       config:
           enabled: true
           tags: uticen_first_caller
-    - name: uticen_login count
+    - name: uticen_login_count
       description: "client login count"
       config:
           enabled: true
-          tags: uticen_login count
+          tags: uticen_login_count
     - name: uticen_clients_with_brand
       description: "uticen clients"
       config:
