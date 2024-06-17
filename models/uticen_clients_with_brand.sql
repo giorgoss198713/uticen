@@ -76,3 +76,5 @@ LEFT JOIN sales_uticen.uticen_login_count lc ON lc.client=cl.id
 LEFT JOIN sales_uticen.statuses st ON st.id=cl.status
 LEFT JOIN sales_uticen.brands br ON br.id=cl.brand
 LEFT JOIN sales_uticen.uticen_ftd_date  fd ON fd.client_id=cl.id
+where
+to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' NOT ilIKE '%test%'
