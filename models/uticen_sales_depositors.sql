@@ -47,7 +47,7 @@ NULL AS campaign_name,
 --cbd.campaign_name_transformed as campaign_name,
 nft.sum_usd_amount as total_deposits_usd
 FROM sales_uticen.uticen_transactions_with_brand twb
-INNER JOIN sales_uticen.uticen_first_approved_date fad ON fad.transaction_id=twb.id
+INNER JOIN sales_uticen.uticen_first_approved_date fad ON fad.client_id_brand_transid_isftd=twb.client_id_brand_transid_isftd
     AND fad.row_num=1
 LEFT JOIN sales_uticen.uticen_non_ftd_deposits nfd ON nfd.client_id_brand_transid_isftd=twb.client_id_brand_transid_isftd
 LEFT JOIN sales_uticen.uticen_clients_with_brand cwb ON cwb.client_id_brand=twb.client_id_brand

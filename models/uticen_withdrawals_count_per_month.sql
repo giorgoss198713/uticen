@@ -23,7 +23,7 @@ SELECT DISTINCT
     END AS status_withdrawals_3_months_ago
 
 FROM
-    sales_uticen.uticen_transactions_with_brand twb
+sales_uticen.uticen_transactions_with_brand twb
 --left join sales.trading_accounts tr
 --ON twb.client_id_brand=concat_ws('_',tr.client_id,tr.brand_name)
 WHERE

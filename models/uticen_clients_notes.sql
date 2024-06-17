@@ -1,7 +1,7 @@
 SELECT
     nt.client,
     cl.brand_name,
-    concat_ws('_',nt.client,cl.brand_name),
+    concat_ws('_',nt.client,cl.brand_name) as client_id_brand,
     NULL AS updatedby_id,
     u.username,
     ntl.title as note_title,

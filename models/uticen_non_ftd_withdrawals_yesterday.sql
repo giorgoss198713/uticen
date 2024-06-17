@@ -12,5 +12,4 @@ AND twb.is_ftd is false
 AND twb.approved_day = (
 CASE WHEN 
 extract(isodow from (current_timestamp)::date)=1 THEN current_timestamp::date - interval '3 day'
-ELSE current_timestamp::date - interval '1 day'
-END)
+ELSE current_timestamp::date - interval '1 day' END)

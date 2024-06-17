@@ -4,7 +4,7 @@ SELECT
     client_id_brand,
     brand_name,
     pool,
-    agent,
+    agent::text,
     duration,
     EXTRACT(HOUR FROM INTERVAL '1 second' * duration) AS hours,
 	EXTRACT(MINUTE FROM INTERVAL '1 second' * duration) AS minutes,
@@ -21,11 +21,11 @@ SELECT
     status,
     NULL AS call_type,
     username,
-    type,
-    MAX(CASE WHEN call_result = 'Conversation Successful' THEN 1 ELSE 0 END) AS conversation_successful_count,
-    MAX(CASE WHEN call_result = 'No Answer' THEN 1 ELSE 0 END) AS no_answer_count,
-    MAX(CASE WHEN call_result = 'Answered Short Conversation' THEN 1 ELSE 0 END) AS answered_short_conversation_count,
-    MAX(CASE WHEN call_result = 'Call Failed' THEN 1 ELSE 0 END) AS call_failed_count
+    type::text,
+    MAX(CASE WHEN call_result = 'Conversation Successful' THEN 1 ELSE 0 END)::bigint AS conversation_successful_count,
+    MAX(CASE WHEN call_result = 'No Answer' THEN 1 ELSE 0 END)::bigint AS no_answer_count,
+    MAX(CASE WHEN call_result = 'Answered Short Conversation' THEN 1 ELSE 0 END)::bigint AS answered_short_conversation_count,
+    MAX(CASE WHEN call_result = 'Call Failed' THEN 1 ELSE 0 END)::bigint AS call_failed_count
 FROM
     (
         SELECT

@@ -21,7 +21,6 @@ JOIN sales_uticen.uticen_clients_with_brand c ON dr.client=c.id
 JOIN sales_uticen.agents ag ON ag.id=dr.agent
 JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
 --JOIN imports.uticen_user_types ut ON u.type=ut.id
---AND u.type IN ('1','4','7','12')
 --webphone_status IN ('ANSWERED','callEnded','inCall')
 where
 c.full_name NOT iLIKE '%test%'

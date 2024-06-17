@@ -27,4 +27,3 @@ WHERE
 pool_final NOT IN ('CRM test pool','CRM Test Pool')
 GROUP BY twb.brand_name, twb.pool_final, anf.agent_name,
 twb.client_id_brand_transid_isftd
---ORDER BY brand_name, pool_final, agent_name

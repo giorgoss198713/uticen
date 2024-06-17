@@ -10,7 +10,8 @@ where
 (cl.status IN ('Refunded ','Do Not Call','Refunded','REFUNDED','refunded','REFUNDED ', 'refunded ')
 OR tsz.total_sum<10))
 
-SELECT identify_clients.client_id_brand,
+SELECT 
+identify_clients.client_id_brand,
 twb.client_id_brand_transid_isftd,
 max(twb.approved_date) as max_wd_date,
 twb.usd_amount_with_minus

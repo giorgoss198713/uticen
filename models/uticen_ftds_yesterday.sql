@@ -10,7 +10,7 @@ where
 twb.type='Deposit'
 AND twb.is_ftd is true
 AND twb.approved_day =(
-CASE WHEN 
+CASE WHEN
 extract(isodow from (current_timestamp)::date)=1 THEN current_timestamp::date - interval '3 day'
 ELSE current_timestamp::date - interval '1 day'
 END)

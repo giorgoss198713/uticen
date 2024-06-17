@@ -1,5 +1,6 @@
 SELECT cast(cl.ftd_date as date) ftd_day, cl.pool, COUNT(na.client) AS client_count,
-cl.status, cl.brand_name, na.max_call_date, na.total_atomix_count, cl.client_in_atomix
+cl.status, cl.brand_name, na.max_call_date, na.total_atomix_count, 
+case when cl.client_in_atomix is true then 'Atomix' else 'No Atomix' end as has_atomix
 FROM sales_uticen.uticen_clients_with_brand cl
 LEFT JOIN (
     SELECT client_id_brand, client, SUM(daily_call_count) AS total_call_count, max_call_date,

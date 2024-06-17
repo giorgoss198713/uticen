@@ -1,5 +1,6 @@
 WITH answered_clients AS (
-SELECT distinct client, cl.brand_name, concat_ws('_',client,cl.brand_name) as client_id_brand
+SELECT 
+distinct client, cl.brand_name, concat_ws('_',client,cl.brand_name) as client_id_brand
 FROM sales_uticen.calls ca
 JOIN sales_uticen.uticen_clients_with_brand cl ON ca.client=cl.id
 JOIN sales_uticen.agents ag ON ag.id=ca.agent
