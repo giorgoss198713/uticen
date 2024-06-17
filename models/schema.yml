@@ -146,7 +146,7 @@ models:
       config:
           enabled: true
           tags: uticen_campaign_table
-    - name: uticen_chargeback_clients
+    - name: uticen_chargeback_clients_transactions
       description: "uticen chargeback clients transactions"
       config:
           enabled: true
@@ -161,11 +161,11 @@ models:
       config:
           enabled: true
           tags: uticen_refunded_clients_transactions
-    - name: uticen_non_ftd_withdrwals_cb
+    - name: uticen_non_ftd_withdrawals_cb
       description: "uticen wds no refund or cb"
       config:
           enabled: true
-          tags: uticen_non_ftd_withdrwals_cb
+          tags: uticen_non_ftd_withdrawals_cb
     - name: uticen_summary_calls
       description: "uticen summary calls table"
       config:
@@ -181,16 +181,16 @@ models:
       config:
           enabled: true
           tags: uticen_calls_count_all
-    - name: uticen_non_asnwering_clients_all
+    - name: uticen_non_answering_clients_all
       description: "uticen all non answering clients"
       config:
           enabled: true
-          tags: uticen_non_asnwering_clients_all
-    - name: uticen_non_asnwering_pools
+          tags: uticen_non_answering_clients_all
+    - name: uticen_non_answering_pools
       description: "uticen non answering pools"
       config:
           enabled: true
-          tags: uticen_non_asnwering_pools
+          tags: uticen_non_answering_pools
     - name: uticen_redepositor_client
       description: "uticen redepositor client"
       config:
@@ -236,3 +236,9 @@ models:
       config:
           enabled: true
           tags: uticen_active_agents
+    - name: uticen_login_count
+      description: "uticen login count prep model"
+      config:
+          enabled: true
+          tags: uticen_login_count
+
