@@ -64,6 +64,7 @@ left join sales_uticen.divisions div on div.id = grp.division
 where
 t.status='Approved'
 AND t.type NOT IN ('Returned')
+AND cl.pool NOT ilIKE '%test%'
 
 UNION ALL
 
@@ -137,3 +138,4 @@ AND ui.status='Credited'
 AND ui.type='Balance'
 AND to_jsonb(transaction_details::json)->>'status'='Approved'
 AND cl.first_calling_pool_transformed is not null
+AND cl.pool NOT ilIKE '%test%'
