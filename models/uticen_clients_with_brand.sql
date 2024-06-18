@@ -48,9 +48,9 @@ fd.ftd_date,
  last_name as lname,
  to_jsonb(general_info::json)->>'gender' as gender,
  concat_ws(' ',first_name,last_name) as full_name,
- CASE WHEN cl.agent IS NULL THEN NULL ELSE concat_ws('_', cl.agent, br.name) END as agent_id_brand,
- concat_ws('_', cl.id, br.name) as client_id_brand,
- concat_ws('_',  to_jsonb(marketing_info::json)->>'campaignId', br.name) as campaign_id_brand,
+ CASE WHEN cl.agent IS NULL THEN NULL ELSE concat_ws('_', cl.agent, LOWER(br.name)) END as agent_id_brand,
+ concat_ws('_', cl.id, LOWER(br.name)) as client_id_brand,
+ concat_ws('_',  to_jsonb(marketing_info::json)->>'campaignId', LOWER(br.name)) as campaign_id_brand,
  (CASE WHEN  (extract(year from current_date)-extract(year from birth_date))>0 and  (extract(year from current_date)-extract(year from birth_date))<31 THEN '19-30'
  WHEN  (extract(year from current_date)-extract(year from birth_date))>30 and  (extract(year from current_date)-extract(year from birth_date))<41 THEN '31-40'
  WHEN  (extract(year from current_date)-extract(year from birth_date)) >40 and  (extract(year from current_date)-extract(year from birth_date))<51 THEN '41-50'
