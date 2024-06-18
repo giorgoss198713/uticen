@@ -35,7 +35,7 @@ fd.ftd_date,
  NULL AS referral,
  NULL::date AS converted_date,
  true as is_ftd,
- br.name as brand_name,
+ LOWER(br.name) as brand_name,
  lc.login_count,
  fc.first_pool AS first_calling_pool_transformed, --ATENTION WAITING FOR FIX
  INITCAP(to_jsonb(hierarchy_log::json)->-1->'changes'->>'division') as desk_manager, --ATENTION
