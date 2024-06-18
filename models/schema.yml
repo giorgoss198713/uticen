@@ -236,9 +236,4 @@ models:
       config:
           enabled: true
           tags: uticen_active_agents
-    - name: uticen_login_count
-      description: "uticen login count prep model"
-      config:
-          enabled: true
-          tags: uticen_login_count
 
