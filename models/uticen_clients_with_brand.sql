@@ -9,7 +9,7 @@ select distinct
  WHEN education IN ('mentorsabio','mentorsabio.com','ganhointeligente','cursosderenda','centraldarenda','analistasdelucro','rendainteligente','capitaldolucro') THEN 'cb9'
  ELSE ''
  END) AS education_cb,
- to_jsonb(address::json)->>'country' as country,
+ col.country,
  NULL as formatted_occupation,
  to_jsonb(general_info::json)->>'occupation' as initial_occupation,
  NULL AS occupation_group,
@@ -75,6 +75,7 @@ LEFT JOIN sales_uticen.uticen_first_caller fc ON fc.client=cl.id
 LEFT JOIN sales_uticen.uticen_login_count lc ON lc.client=cl.id
 LEFT JOIN sales_uticen.statuses st ON st.id=cl.status
 LEFT JOIN sales_uticen.brands br ON br.id=cl.brand
-LEFT JOIN sales_uticen.uticen_ftd_date  fd ON fd.client_id=cl.id
+LEFT JOIN sales_uticen.uticen_ftd_date fd ON fd.client_id=cl.id
+LEFT JOIN sales_uticen.uticen_country_list col ON col.iso=to_jsonb(address::json)->>'country'
 where
 to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' NOT ilIKE '%test%'
