@@ -39,10 +39,10 @@ fd.ftd_date,
  lc.login_count,
  fc.first_pool AS first_calling_pool_transformed, --ATENTION WAITING FOR FIX
  INITCAP(to_jsonb(hierarchy_log::json)->-1->'changes'->>'division') as desk_manager, --ATENTION
- CASE WHEN language='en' THEN 'ENG' else language END AS pool_language,
+ CASE WHEN cl.language='en' THEN 'ENG' else cl.language END AS pool_language,
  fc.first_agent AS first_calling_agent,
  agent AS retention_agent,
- CASE WHEN language='en' THEN 'ENG' else language END AS language,
+ ll.language,
  NULL AS referral_brand,
  first_name as fname,
  last_name as lname,
@@ -77,5 +77,6 @@ LEFT JOIN sales_uticen.statuses st ON st.id=cl.status
 LEFT JOIN sales_uticen.brands br ON br.id=cl.brand
 LEFT JOIN sales_uticen.uticen_ftd_date fd ON fd.client_id=cl.id
 LEFT JOIN sales_uticen.uticen_country_list col ON col.iso=to_jsonb(address::json)->>'country'
+LEFT JOIN sales_uticen.uticen_language_list ll ON ll.language_code=cl.language
 where
 to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' NOT ilIKE '%test%'
