@@ -33,11 +33,11 @@ concat_ws('_',t.agent,cl.brand_name) AS agent_id_brand,
 concat_ws('_',tra.client,cl.brand_name,CAST(t.inserted_date as date)) AS client_id_brand_day,
 NULL AS client_id_brand_day_time,
 concat_ws('_',t.agent,cl.brand_name,t.id,false)  AS client_id_brand_transid_isftd,
-NULL AS client_id_brand_day_isftd, --ATTENTION
-NULL AS client_id_brand_day_isftd_type, --ATTENTION
+concat_ws('_',tra.client,cl.brand_name,CAST(t.inserted_date as date),false) AS client_id_brand_day_isftd, --ATTENTION
+concat_ws('_',tra.client,cl.brand_name,CAST(t.inserted_date as date),false,t.type) AS client_id_brand_day_isftd_type, --ATTENTION
 concat_ws('_',t.agent, cl.brand_name) AS agent_id_brand_final, --ATTENTION FULL LOGIC
 concat_ws('_',t.agent,cl.brand_name,CAST(t.inserted_date as date)) AS agent_id_brand_day,
-cl.pool AS pool_final, --ATTENTION WAITING FOR FIX
+te.name AS pool_final, --ATTENTION WAITING FOR FIX
 CASE WHEN te.name IS NOT NULL THEN concat_ws('_',cl.brand_name,te.name) ELSE NULL END AS brand_pool_final,
 CASE WHEN t.type = 'Withdrawal' THEN - t. usd_conversion_rate*amount ELSE t. usd_conversion_rate*amount END as usd_amount_with_minus,
 NULL::bigint AS answered_binary, --ATTENTION, CLIENTS?
@@ -103,8 +103,8 @@ concat_ws('_',cl.first_calling_agent,cl.brand_name) AS agent_id_brand,
 concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) AS client_id_brand_day,
 NULL AS client_id_brand_day_time,
 concat_ws('_',cl.id,cl.brand_name,(to_jsonb(transaction_details::json)->>'id'),true) AS client_id_brand_transid_isftd, --ATTENTION
-NULL AS client_id_brand_day_isftd, --ATTENTION
-NULL AS client_id_brand_day_isftd_type, --ATTENTION
+concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date),true)  AS client_id_brand_day_isftd, --ATTENTION
+concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date),true,to_jsonb(transaction_details::json)->>'type')  AS client_id_brand_day_isftd_type, --ATTENTION
 concat_ws('_',cl.first_calling_agent,cl.brand_name) AS agent_id_brand_final, --ATTENTION FULL LOGIC
 concat_ws('_',cl.first_calling_agent,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) AS agent_id_brand_day,
 cl.pool AS pool_final, --ATTENTION WAITING FOR FIX
