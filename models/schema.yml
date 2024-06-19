@@ -236,4 +236,9 @@ models:
       config:
           enabled: true
           tags: uticen_active_agents
+    - name: uticen_country_list
+      description: "uticen country list with country codes"
+      config:
+          enabled: true
+          tags: uticen_country_list
 
