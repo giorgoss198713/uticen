@@ -22,9 +22,9 @@ select distinct
  lead_id AS brm_id,
  (to_jsonb(general_info::json)->>'dialerLeadId')::bigint as dialer_id,
  NULL AS email,
-fd.ftd_date,
-0 AS deposit_amount,
-0 AS withdrawal_amount,
+ cl.ftd_date,
+ 0 AS deposit_amount,
+ 0 AS withdrawal_amount,
  ca.last_call_date,
  'Client' AS entry_type,
  null as verified,
@@ -32,6 +32,7 @@ fd.ftd_date,
  to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' as pool,
  cl.created_date,
  (to_jsonb(marketing_info::json)->>'campaignId')::bigint as campaign_id,
+ to_jsonb(marketing_info::json)->>'marketingCampaignName' as campaign_name,
  NULL AS referral,
  NULL::date AS converted_date,
  true as is_ftd,
@@ -68,7 +69,9 @@ fd.ftd_date,
  ca.answered_calls,
  NULL::bigint as answered_binary,
  NULL AS answered_call,
- NULL as refunded
+ NULL as refunded,
+ to_jsonb(marketing_info::json)->>'utmSource' as UTMSource,
+ to_jsonb(marketing_info::json)->>'utmMedium' as UTMMedium
 FROM sales_uticen.clients cl
 LEFT JOIN sales_uticen.uticen_calls_summary ca ON ca.client=cl.id
 LEFT JOIN sales_uticen.uticen_first_caller fc ON fc.client=cl.id
