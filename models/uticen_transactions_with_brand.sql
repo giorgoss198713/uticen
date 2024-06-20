@@ -21,7 +21,7 @@ to_jsonb(psp_details::json)->>'paymentMethod' as payment_method,
 to_jsonb(psp_details::json)->>'pspName' as psp_name, -- EXTRA COLUMN
 INITCAP(div.name) AS desk_manager,
 grp.name AS group_manager, --EXTRA COLUMN
-CASE WHEN cl.language='en' THEN 'ENG' ELSE cl.language END AS language,
+cl.pool_language,
 cl.brand_name AS brand_name,
 NULL AS psp_id_brand,
 concat_ws('_',tra.client,cl.brand_name) AS client_id_brand,
