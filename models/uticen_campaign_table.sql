@@ -2,7 +2,7 @@ SELECT
 twb.language, twb.brand_name, twb.pool_final,
 cwb.country, 
 --cbd.campaign_name_transformed,
-NULL as campaign_name_transformed,
+cwb.campaign_name as campaign_name_transformed,
 --cbd.live_not_live,
 NULL AS live_not_live,
 concat_ws('_',twb.brand_name,twb.pool_final) as brand_pool_final,
@@ -36,7 +36,7 @@ twb.pool_final NOT IN ('CRM test pool','CRM Test Pool')
 GROUP BY 
 twb.language, twb.brand_name, twb.pool_final,
 twb.client_id_brand_transid_isftd, twb.client_id_brand, cwb.country, 
---cbd.campaign_name_transformed, 
+cwb.campaign_name,
 cwb.ftd_date, twb.approved_date, 
 fdb.ftd_bucket, fdb.ftd_bucket_2, fdb.ftd_bucket_3, fdb.ftd_bucket_4, nfd.client_id_brand_transid_isftd, nfw.client_id_brand_transid_isftd,
 fad1.client_id_brand 
