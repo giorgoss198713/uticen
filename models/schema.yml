@@ -241,4 +241,15 @@ models:
       config:
           enabled: true
           tags: uticen_country_list
+    - name: uticen_deposit_last_week
+      description: "uticen client deposited last week"
+      config:
+          enabled: true
+          tags: uticen_deposit_last_week
+    - name: uticen_summary_client_amounts
+      description: "uticen summary per client for amounts"
+      config:
+          enabled: true
+          tags: uticen_summary_client_amounts
+
 
