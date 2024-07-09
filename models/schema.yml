@@ -251,5 +251,11 @@ models:
       config:
           enabled: true
           tags: uticen_summary_client_amounts
+    - name: uticen_client_last_note
+      description: "uticen last note for client"
+      config:
+          enabled: true
+          tags: uticen_client_last_note
+
 
 
