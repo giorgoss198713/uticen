@@ -241,11 +241,16 @@ models:
       config:
           enabled: true
           tags: uticen_country_list
-    - name: uticen_deposit_last_week
-      description: "uticen client deposited last week"
+    - name: uticen_marketing_cat3
+      description: "uticen prep model for cat3 marketing email"
       config:
           enabled: true
-          tags: uticen_deposit_last_week
+          tags: uticen_marketing_cat3
+    - name: uticen_marketing_cat_1_4
+      description: "uticen prep model for cat 1 and 4 marketing emails"
+      config:
+          enabled: true
+          tags: uticen_marketing_cat_1_4
     - name: uticen_summary_client_amounts
       description: "uticen summary per client for amounts"
       config:
