@@ -1,4 +1,5 @@
-SELECT 
+SELECT
+    cl.id as client_id,
     cl.client_id_brand,
 	cl.pool,
     cl.brand_name,
@@ -82,4 +83,4 @@ FROM
 LEFT JOIN 
     sales_uticen.uticen_non_ftd_deposits nfd ON cl.client_id_brand = nfd.client_id_brand
 GROUP BY 
-    cl.client_id_brand, cl.pool, cast(cl.ftd_date as date), cl.brand_name
+    cl.id, cl.client_id_brand, cl.pool, cast(cl.ftd_date as date), cl.brand_name
