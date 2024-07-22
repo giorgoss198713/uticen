@@ -34,15 +34,20 @@ WITH
     ),
     -- CTE for deposits until previous day
     deposits_until_prev_day AS (
-        SELECT
-            client_id_brand,
-            SUM(deposit_sum) AS deposits_until_prev_day
-        FROM
-            daily_transactions
-        WHERE
-            approved_date < CURRENT_DATE - INTERVAL '1 DAY'
-        GROUP BY
-            client_id_brand
+    SELECT
+        client_id_brand,
+        SUM(deposit_sum) AS deposits_until_prev_day
+    FROM
+        daily_transactions
+    WHERE
+        approved_date < 
+        CASE 
+            WHEN EXTRACT(DOW FROM CURRENT_DATE) = 1 
+            THEN CURRENT_DATE - INTERVAL '4 DAY' 
+            ELSE CURRENT_DATE - INTERVAL '1 DAY' 
+        END
+    GROUP BY
+        client_id_brand
     ),
     -- CTE for deposits until end of two months ago
     deposits_minus_one_interval_month AS (
