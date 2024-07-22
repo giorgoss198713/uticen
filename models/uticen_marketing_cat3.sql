@@ -3,6 +3,9 @@ SELECT
     cl.client_id_brand,
 	cl.pool,
     cl.brand_name,
+    cl.full_name,
+    cl.retention_agent,
+    cl.status,
     cast(cl.ftd_date as date) as ftd_date,
     CASE 
         WHEN EXTRACT(DOW FROM NOW()) = 1 THEN -- If today is Monday
@@ -83,4 +86,4 @@ FROM
 LEFT JOIN 
     sales_uticen.uticen_non_ftd_deposits nfd ON cl.client_id_brand = nfd.client_id_brand
 GROUP BY 
-    cl.id, cl.client_id_brand, cl.pool, cast(cl.ftd_date as date), cl.brand_name
+    cl.id, cl.client_id_brand, cl.pool, cast(cl.ftd_date as date), cl.brand_name, cl.full_name, cl.retention_agent, cl.status
