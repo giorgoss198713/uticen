@@ -4,7 +4,7 @@ SELECT
 	cl.pool,
     cl.brand_name,
     cl.full_name,
-    cl.retention_agent,
+    u.agent_name as retention_agent,
     cl.status,
     cast(cl.ftd_date as date) as ftd_date,
     CASE 
@@ -85,5 +85,7 @@ FROM
     sales_uticen.uticen_clients_with_brand cl
 LEFT JOIN 
     sales_uticen.uticen_non_ftd_deposits nfd ON cl.client_id_brand = nfd.client_id_brand
+LEFT JOIN 
+    sales_uticen.uticen_agent_name_current u ON concat_ws('_',cl.retention_agent,cl.brand_name) = u.agent_id_brand
 GROUP BY 
-    cl.id, cl.client_id_brand, cl.pool, cast(cl.ftd_date as date), cl.brand_name, cl.full_name, cl.retention_agent, cl.status
+    cl.id, cl.client_id_brand, cl.pool, cast(cl.ftd_date as date), cl.brand_name, cl.full_name, u.agent_name, cl.status
