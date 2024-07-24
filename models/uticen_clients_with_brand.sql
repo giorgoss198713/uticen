@@ -69,7 +69,9 @@ select distinct
  ca.answered_calls,
  NULL::bigint as answered_binary,
  NULL AS answered_call,
- NULL as refunded,
+ NULL AS refunded,
+ NULL AS education_level,
+ NULL AS home_owner,
  to_jsonb(marketing_info::json)->>'utmSource' as UTMSource,
  to_jsonb(marketing_info::json)->>'utmMedium' as UTMMedium
 FROM sales_uticen.clients cl
