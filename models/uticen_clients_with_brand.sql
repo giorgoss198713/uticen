@@ -22,7 +22,7 @@ select distinct
  lead_id AS brm_id,
  (to_jsonb(general_info::json)->>'dialerLeadId')::bigint as dialer_id,
  NULL AS email,
- cl.ftd_date,
+ CASE WHEN cl.ftd_date IS NULL THEN fd.ftd_date ELSE cl.ftd_date END AS ftd_date,
  0 AS deposit_amount,
  0 AS withdrawal_amount,
  ca.last_call_date,
