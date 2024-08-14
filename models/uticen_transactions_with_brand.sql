@@ -52,7 +52,8 @@ CASE EXTRACT(DOW FROM t.inserted_date)
     WHEN 4 THEN '4. Thursday'
     WHEN 5 THEN '5. Friday'
     WHEN 6 THEN '6. Saturday'
-    END AS day_of_week
+    END AS day_of_week,
+to_jsonb(payer_details::json)->>'lastFourDigits' as card_number
 FROM sales_uticen.transactions t
 left join sales_uticen.trading_accounts tra on t.trading_account = tra.id
 left join sales_uticen.uticen_clients_with_brand cl on tra.client = cl.id
@@ -123,7 +124,8 @@ CASE EXTRACT(DOW FROM (to_timestamp((transaction_details::jsonb ->> 'createdDate
     WHEN 4 THEN '4. Thursday'
     WHEN 5 THEN '5. Friday'
     WHEN 6 THEN '6. Saturday'
-    END AS day_of_week
+    END AS day_of_week,
+(to_jsonb(transaction_details::json)->>'cardNumber') AS card_number
 from sales_uticen.incentives ui
 left join sales_uticen.trading_accounts tra on ui.trading_account = tra.id
 left join sales_uticen.uticen_clients_with_brand cl on tra.client = cl.id
