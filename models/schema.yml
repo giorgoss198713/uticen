@@ -261,6 +261,11 @@ models:
       config:
           enabled: true
           tags: uticen_client_last_note
+    - name: uticen_agent_name_benjamin
+      description: "uticen agents for benjamin"
+      config:
+          enabled: true
+          tags: uticen_agent_name_benjamin
 
 
 
