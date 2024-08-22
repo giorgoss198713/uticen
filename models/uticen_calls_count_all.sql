@@ -21,7 +21,8 @@ SELECT
     status,
     NULL AS call_type,
     username,
-    type::text,
+    type,
+    case when user_type='agent' then 'Retention Agent' else user_type END AS user_type,
     MAX(CASE WHEN call_result = 'Conversation Successful' THEN 1 ELSE 0 END)::bigint AS conversation_successful_count,
     MAX(CASE WHEN call_result = 'No Answer' THEN 1 ELSE 0 END)::bigint AS no_answer_count,
     MAX(CASE WHEN call_result = 'Answered Short Conversation' THEN 1 ELSE 0 END)::bigint AS answered_short_conversation_count,
@@ -41,6 +42,7 @@ FROM
             NULL call_type,
             u.username,
             u.type,
+            u.user_type,
             (CASE 
                 WHEN extract(epoch from (finished_at - accepted_at))::int > 180 THEN 'Conversation Successful'
                 WHEN ca.status IN ('Not Answer') THEN 'No Answer'
@@ -65,7 +67,8 @@ GROUP BY
     created_date,
     status,
     username,
-    type
+    type,
+    user_type
 ORDER BY
     created_date DESC
 
