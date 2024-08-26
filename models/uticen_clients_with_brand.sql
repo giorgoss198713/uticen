@@ -92,6 +92,7 @@ select distinct
  (extract(year from current_date)-extract(year from birth_date)) as age,
  to_jsonb(general_info::json)->>'maritalStatus' as initial_marital_status,
  to_jsonb(address::json)->>'zipCode' as zip_code,
+ to_jsonb(address::json)->>'city' as city,
  to_jsonb(address::json)->>'state' as state,
  0 AS cpa,
  false as depositor,
