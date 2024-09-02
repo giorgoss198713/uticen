@@ -136,7 +136,7 @@ left join sales_uticen.trading_accounts tra on ui.trading_account = tra.id
 left join sales_uticen.uticen_clients_with_brand cl on tra.client = cl.id
 left join sales_uticen.agents ag on ag.id = cl.first_calling_agent
 left join sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
-left join sales_uticen.teams te on cl.first_calling_pool_transformed = CASE WHEN te.name='EN CY' THEN 'English Desk' ELSE te.name END
+left join sales_uticen.teams te on CASE WHEN cl.first_calling_pool_transformed='English Desk' THEN 'EN CY' ELSE cl.first_calling_pool_transformed END = te.name
 left join sales_uticen.groups grp on grp.id = te.group_id
 left join sales_uticen.divisions div on div.id = grp.division
 where
