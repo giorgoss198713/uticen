@@ -106,7 +106,7 @@ select distinct
  'Client' AS entry_type,
  null as verified,
  st.name as status,
- to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' as pool,
+ CASE WHEN to_jsonb(hierarchy_log::json)->-1->'changes'->>'team'='EN CY' THEN 'English Desk' ELSE to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' end as pool,
  cl.created_date,
  (to_jsonb(marketing_info::json)->>'campaignId')::bigint as campaign_id,
  to_jsonb(marketing_info::json)->>'marketingCampaignName' as campaign_name,
