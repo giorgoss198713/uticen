@@ -16,7 +16,7 @@ false AS isfake,
 t.type,
 case when sub_type iLIKE '%Ftd%' THEN true else false END AS is_ftd,
 cl.pool AS current_pool_transformed,
-te.name AS pool_transformed,
+CASE WHEN te.name='EN CY' THEN 'English Desk' ELSE te.name END AS pool_transformed,
 to_jsonb(psp_details::json)->>'paymentMethod' as payment_method,
 to_jsonb(psp_details::json)->>'pspName' as psp_name, -- EXTRA COLUMN
 INITCAP(div.name) AS desk_manager,
@@ -27,7 +27,7 @@ NULL AS psp_id_brand,
 concat_ws('_',tra.client,cl.brand_name) AS client_id_brand,
 NULL AS ta_id_brand,
 NULL AS fundprocessor_id_brand,
-concat_ws('_',cl.brand_name,te.name) AS brand_pool,
+CASE WHEN te.name='EN CY' THEN 'English Desk' ELSE concat_ws('_',cl.brand_name,te.name) END AS brand_pool,
 t.agent,
 concat_ws('_',t.agent,cl.brand_name) AS agent_id_brand,
 concat_ws('_',tra.client,cl.brand_name,CAST(t.inserted_date as date)) AS client_id_brand_day,
@@ -37,8 +37,10 @@ concat_ws('_',tra.client,cl.brand_name,CAST(t.inserted_date as date),false) AS c
 concat_ws('_',tra.client,cl.brand_name,CAST(t.inserted_date as date),false,t.type) AS client_id_brand_day_isftd_type, --ATTENTION
 concat_ws('_',t.agent, cl.brand_name) AS agent_id_brand_final, --ATTENTION FULL LOGIC
 concat_ws('_',t.agent,cl.brand_name,CAST(t.inserted_date as date)) AS agent_id_brand_day,
-te.name AS pool_final, --ATTENTION WAITING FOR FIX
-CASE WHEN te.name IS NOT NULL THEN concat_ws('_',cl.brand_name,te.name) ELSE NULL END AS brand_pool_final,
+CASE WHEN te.name='EN CY' THEN 'English Desk' ELSE te.name END AS pool_final,
+CASE WHEN te.name='EN CY' THEN concat_ws('_',cl.brand_name,'English Desk') 
+WHEN te.name IS NOT NULL AND te.name!='EN CY' THEN concat_ws('_',cl.brand_name,te.name) 
+ELSE NULL END AS brand_pool_final,
 CASE WHEN t.type = 'Withdrawal' THEN - t. usd_conversion_rate*amount ELSE t. usd_conversion_rate*amount END as usd_amount_with_minus,
 NULL::bigint AS answered_binary, --ATTENTION, CLIENTS?
 concat_ws('_',u.username,cl.brand_name, to_char(t.inserted_date, 'FMMonth YYYY')) as username_brand_date,
@@ -98,7 +100,8 @@ NULL AS psp_id_brand,
 concat_ws('_',tra.client,cl.brand_name) AS client_id_brand,
 NULL AS ta_id_brand,
 NULL AS fundprocessor_id_brand,
-concat_ws('_',cl.brand_name,te.name) AS brand_pool,
+CASE WHEN te.name='EN CY' THEN concat_ws('_',cl.brand_name,'English Desk')
+ELSE concat_ws('_',cl.brand_name,te.name) END AS brand_pool,
 cl.first_calling_agent as agent,
 concat_ws('_',cl.first_calling_agent,cl.brand_name) AS agent_id_brand,
 concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) AS client_id_brand_day,
@@ -108,8 +111,10 @@ concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::
 concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date),true,to_jsonb(transaction_details::json)->>'type')  AS client_id_brand_day_isftd_type, --ATTENTION
 concat_ws('_',cl.first_calling_agent,cl.brand_name) AS agent_id_brand_final, --ATTENTION FULL LOGIC
 concat_ws('_',cl.first_calling_agent,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) AS agent_id_brand_day,
-cl.pool AS pool_final, --ATTENTION WAITING FOR FIX
-CASE WHEN te.name IS NOT NULL THEN concat_ws('_',cl.brand_name,te.name) ELSE NULL END AS brand_pool_final,
+cl.pool AS pool_final,
+CASE WHEN te.name='EN CY' THEN concat_ws('_',cl.brand_name,'English Desk') 
+WHEN te.name IS NOT NULL AND te.name!='EN CY' THEN concat_ws('_',cl.brand_name,te.name) 
+ELSE NULL END AS brand_pool_final,
 (to_jsonb(transaction_details::json)->>'amountInUsd')::double precision as usd_amount_with_minus,
 NULL::bigint AS answered_binary, --ATTENTION, CLIENTS?
 concat_ws('_',u.username,cl.brand_name, to_char((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp, 'FMMonth YYYY')) as username_brand_date,
@@ -131,7 +136,7 @@ left join sales_uticen.trading_accounts tra on ui.trading_account = tra.id
 left join sales_uticen.uticen_clients_with_brand cl on tra.client = cl.id
 left join sales_uticen.agents ag on ag.id = cl.first_calling_agent
 left join sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
-left join sales_uticen.teams te on cl.first_calling_pool_transformed = te.name
+left join sales_uticen.teams te on cl.first_calling_pool_transformed = CASE WHEN te.name='EN CY' THEN 'English Desk' ELSE te.name END
 left join sales_uticen.groups grp on grp.id = te.group_id
 left join sales_uticen.divisions div on div.id = grp.division
 where

@@ -7,7 +7,7 @@ WITH min_dates AS (
 SELECT 
     ca.client, 
     ca.agent AS first_agent, 
-    te.name AS first_pool, 
+    CASE WHEN te.name='EN CY' THEN 'English Desk' ELSE te.name END AS first_pool,
     ca.accepted_at AS first_call_date
 FROM 
     sales_uticen.calls ca
