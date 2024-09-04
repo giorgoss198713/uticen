@@ -82,9 +82,11 @@ true AS frombm,
 to_jsonb(transaction_details::json)->>'status' as status,
 (to_timestamp((transaction_details::jsonb ->> 'createdDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as created_date,
 to_char((to_timestamp((transaction_details::jsonb ->> 'createdDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp, 'HH24:MI') as created_time,
-(to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as approved_date,
+CASE WHEN cast(cl.created_date as date)>cast(cl.ftd_date as date) THEN cl.created_date 
+ELSE (to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp END as approved_date,
 to_char((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp, 'HH24:MI') as approved_time,
-CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date) as approved_day,
+CASE WHEN cast(cl.created_date as date)>cast(cl.ftd_date as date) THEN cast(cl.created_date as date)
+ELSE CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date) END as approved_day,
 ((to_jsonb(transaction_details::json)->>'isAllFake'))::boolean as is_fake,
 to_jsonb(transaction_details::json)->>'type' as type,
 true as is_ftd,
