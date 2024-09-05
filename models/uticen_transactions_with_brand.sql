@@ -82,10 +82,10 @@ true AS frombm,
 to_jsonb(transaction_details::json)->>'status' as status,
 (to_timestamp((transaction_details::jsonb ->> 'createdDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as created_date,
 to_char((to_timestamp((transaction_details::jsonb ->> 'createdDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp, 'HH24:MI') as created_time,
-CASE WHEN cast(cl.created_date as date)>cast(cl.ftd_date as date) THEN cl.created_date 
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN cl2.created_date 
 ELSE (to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp END as approved_date,
 to_char((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp, 'HH24:MI') as approved_time,
-CASE WHEN cast(cl.created_date as date)>cast(cl.ftd_date as date) THEN cast(cl.created_date as date)
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN cast(cl2.created_date as date)
 ELSE CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date) END as approved_day,
 ((to_jsonb(transaction_details::json)->>'isAllFake'))::boolean as is_fake,
 to_jsonb(transaction_details::json)->>'type' as type,
@@ -106,23 +106,41 @@ CASE WHEN te.name='EN CY' THEN concat_ws('_',cl.brand_name,'English Desk')
 ELSE concat_ws('_',cl.brand_name,te.name) END AS brand_pool,
 cl.first_calling_agent as agent,
 concat_ws('_',cl.first_calling_agent,cl.brand_name) AS agent_id_brand,
-concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) AS client_id_brand_day,
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN concat_ws('_',cl.id,cl.brand_name,cast(cl.created_date as date))
+ELSE concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) END AS client_id_brand_day,
 NULL AS client_id_brand_day_time,
 concat_ws('_',cl.id,cl.brand_name,(to_jsonb(transaction_details::json)->>'id'),true) AS client_id_brand_transid_isftd, --ATTENTION
-concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date),true)  AS client_id_brand_day_isftd, --ATTENTION
-concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date),true,to_jsonb(transaction_details::json)->>'type')  AS client_id_brand_day_isftd_type, --ATTENTION
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN concat_ws('_',cl.id,cl.brand_name,cast(cl.created_date as date),true)
+ELSE concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date),true) END AS client_id_brand_day_isftd, --ATTENTION
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN concat_ws('_',cl.id,cl.brand_name,cast(cl.created_date as date),true,to_jsonb(transaction_details::json)->>'type')
+ELSE concat_ws('_',tra.client,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date),true,to_jsonb(transaction_details::json)->>'type') END AS client_id_brand_day_isftd_type, --ATTENTION
 concat_ws('_',cl.first_calling_agent,cl.brand_name) AS agent_id_brand_final, --ATTENTION FULL LOGIC
-concat_ws('_',cl.first_calling_agent,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) AS agent_id_brand_day,
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN concat_ws('_',cl.first_calling_agent,cl.brand_name,cast(cl.created_date as date))
+ELSE concat_ws('_',cl.first_calling_agent,cl.brand_name,CAST((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp as date)) END AS agent_id_brand_day,
 cl.pool AS pool_final,
 CASE WHEN te.name='EN CY' THEN concat_ws('_',cl.brand_name,'English Desk') 
 WHEN te.name IS NOT NULL AND te.name!='EN CY' THEN concat_ws('_',cl.brand_name,te.name) 
 ELSE NULL END AS brand_pool_final,
 (to_jsonb(transaction_details::json)->>'amountInUsd')::double precision as usd_amount_with_minus,
 NULL::bigint AS answered_binary, --ATTENTION, CLIENTS?
-concat_ws('_',u.username,cl.brand_name, to_char((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp, 'FMMonth YYYY')) as username_brand_date,
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN concat_ws('_',u.username,cl.brand_name,cast(cl.created_date as date))
+ELSE concat_ws('_',u.username,cl.brand_name, to_char((to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp, 'FMMonth YYYY')) END AS username_brand_date,
 concat_ws('-',u.username,cl.brand_name) as username_brand,
-EXTRACT(WEEK FROM (to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp) - 
-EXTRACT(WEEK FROM DATE_TRUNC('month', (to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp)) + 1 AS week_of_month,
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date) THEN EXTRACT(WEEK FROM (cl2.created_date))-EXTRACT(WEEK FROM DATE_TRUNC('month',cl2.created_date))+1
+ELSE EXTRACT(WEEK FROM (to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp) - 
+EXTRACT(WEEK FROM DATE_TRUNC('month', (to_timestamp((transaction_details::jsonb ->> 'approvedDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp)) + 1 END AS week_of_month,
+CASE WHEN cast(cl2.created_date as date)>cast(cl2.ftd_date as date)
+THEN
+CASE EXTRACT(DOW FROM (cl2.created_date))			
+    WHEN 0 THEN '7. Sunday'
+    WHEN 1 THEN '1. Monday'
+    WHEN 2 THEN '2. Tuesday'
+    WHEN 3 THEN '3. Wednesday'
+    WHEN 4 THEN '4. Thursday'
+    WHEN 5 THEN '5. Friday'
+    WHEN 6 THEN '6. Saturday'
+END
+ELSE
 CASE EXTRACT(DOW FROM (to_timestamp((transaction_details::jsonb ->> 'createdDate')::text, 'YYYY-MM-DD HH24:MI:SS') AT TIME ZONE 'UTC')::timestamp)
     WHEN 0 THEN '7. Sunday'
     WHEN 1 THEN '1. Monday'
@@ -131,11 +149,13 @@ CASE EXTRACT(DOW FROM (to_timestamp((transaction_details::jsonb ->> 'createdDate
     WHEN 4 THEN '4. Thursday'
     WHEN 5 THEN '5. Friday'
     WHEN 6 THEN '6. Saturday'
-    END AS day_of_week,
+    END 
+END AS day_of_week,
 (to_jsonb(transaction_details::json)->>'cardNumber') AS card_number
 from sales_uticen.incentives ui
 left join sales_uticen.trading_accounts tra on ui.trading_account = tra.id
 left join sales_uticen.uticen_clients_with_brand cl on tra.client = cl.id
+left join sales_uticen.clients cl2 on tra.client = cl2.id
 left join sales_uticen.agents ag on ag.id = cl.first_calling_agent
 left join sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
 left join sales_uticen.teams te on CASE WHEN cl.first_calling_pool_transformed='English Desk' THEN 'EN CY' ELSE cl.first_calling_pool_transformed END = te.name
