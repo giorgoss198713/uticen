@@ -117,7 +117,10 @@ select distinct
  true as is_ftd,
  LOWER(br.name) as brand_name,
  lc.login_count,
- fc.first_pool AS first_calling_pool_transformed, --ATENTION WAITING FOR FIX
+ CASE WHEN fc.first_pool IS NOT NULL THEN fc.first_pool
+ WHEN fc.first_pool IS NULL THEN
+ (CASE WHEN to_jsonb(hierarchy_log::json)->-1->'changes'->>'team'='EN CY' THEN 'English Desk' ELSE to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' END)
+ END AS first_calling_pool_transformed, --ATENTION WAITING FOR FIX
  INITCAP(to_jsonb(hierarchy_log::json)->-1->'changes'->>'division') as desk_manager, --ATENTION
  CASE WHEN cl.language='en' THEN 'ENG' else cl.language END AS pool_language,
  fc.first_agent AS first_calling_agent,
@@ -163,4 +166,7 @@ LEFT JOIN sales_uticen.uticen_ftd_date fd ON fd.client_id=cl.id
 LEFT JOIN sales_uticen.uticen_country_list col ON col.iso=to_jsonb(address::json)->>'country'
 LEFT JOIN sales_uticen.uticen_language_list ll ON ll.language_code=cl.language
 where
-to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' NOT ilIKE '%test%'
+(
+    to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' NOT ILIKE '%test%'
+    OR to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' IS NULL
+  )
