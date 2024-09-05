@@ -108,7 +108,11 @@ select distinct
  'Client' AS entry_type,
  null as verified,
  st.name as status,
- CASE WHEN to_jsonb(hierarchy_log::json)->-1->'changes'->>'team'='EN CY' THEN 'English Desk' ELSE to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' end as pool,
+ CASE WHEN to_jsonb(hierarchy_log::json)->-1->'changes'->>'team'='EN CY'  IS NOT NULL THEN
+ CASE WHEN to_jsonb(hierarchy_log::json)->-1->'changes'->>'team'='EN CY' THEN 'English Desk' ELSE to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' END 
+ ELSE
+ 'Not Assigned' 
+ END as pool,
  cl.created_date,
  (to_jsonb(marketing_info::json)->>'campaignId')::bigint as campaign_id,
  to_jsonb(marketing_info::json)->>'marketingCampaignName' as campaign_name,
@@ -118,8 +122,9 @@ select distinct
  LOWER(br.name) as brand_name,
  lc.login_count,
  CASE WHEN fc.first_pool IS NOT NULL THEN fc.first_pool
- WHEN fc.first_pool IS NULL THEN
+ WHEN fc.first_pool IS NULL AND to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' IS NOT NULL THEN
  (CASE WHEN to_jsonb(hierarchy_log::json)->-1->'changes'->>'team'='EN CY' THEN 'English Desk' ELSE to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' END)
+ WHEN fc.first_pool IS NULL AND to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' IS NULL THEN 'Not Assigned'
  END AS first_calling_pool_transformed, --ATENTION WAITING FOR FIX
  INITCAP(to_jsonb(hierarchy_log::json)->-1->'changes'->>'division') as desk_manager, --ATENTION
  CASE WHEN cl.language='en' THEN 'ENG' else cl.language END AS pool_language,
