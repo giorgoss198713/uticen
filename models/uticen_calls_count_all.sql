@@ -35,7 +35,8 @@ FROM
             concat_ws('_', ca.client, cl.brand_name) AS client_id_brand,
             cl.brand_name,
             cl.pool,
-            ca.agent,
+			u.user_id as agent,
+            --ca.agent,
             extract(epoch from (finished_at - accepted_at))::int as duration,
             ca.created_date,
             ca.status,
@@ -52,10 +53,12 @@ FROM
         FROM
             sales_uticen.calls ca
             JOIN sales_uticen.uticen_clients_with_brand cl ON ca.client=cl.id
-			JOIN sales_uticen.agents ag ON ag.id=ca.agent
-			JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
+			--JOIN sales_uticen.agents ag ON ag.id=ca.agent
+			--JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
+			JOIN sales_uticen.uticen_admin_users u ON u.user_id=ca.caller
         WHERE 
             u.type=3
+			--AND cl.id=1813
     ) AS subquery
 GROUP BY
     client,
@@ -71,4 +74,3 @@ GROUP BY
     user_type
 ORDER BY
     created_date DESC
-
