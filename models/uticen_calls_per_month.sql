@@ -44,13 +44,14 @@ SELECT
 FROM
     sales_uticen.uticen_clients_with_brand c
  	LEFT JOIN sales_uticen.calls ca ON ca.client=c.id
-	LEFT JOIN sales_uticen.agents ag ON ag.id=ca.agent
+	 LEFT JOIN sales_uticen.uticen_admin_users u ON u.user_id=ca.caller
+	--LEFT JOIN sales_uticen.agents ag ON ag.id=ca.agent
 	LEFT JOIN sales_uticen.agents ag1 ON ag1.id=c.retention_agent
-	LEFT JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
 	LEFT JOIN sales_uticen.uticen_admin_users u1 ON u1.user_id=ag1.user_id
 WHERE
     EXTRACT(MONTH FROM ca.created_date) = EXTRACT(MONTH FROM CURRENT_DATE)
 	AND u.type=3
+	--AND ca.client=1813
 	AND DATE_TRUNC('month', ftd_date) = DATE_TRUNC('month', CURRENT_DATE)
 GROUP BY
     c.id, c.brand_name, c.status, cast(c.ftd_date as date), c.full_name, c.age, c.gender, c.deposit_amount, u1.username
