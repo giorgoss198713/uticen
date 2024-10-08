@@ -45,7 +45,7 @@ FROM
     sales_uticen.uticen_clients_with_brand c
  	LEFT JOIN sales_uticen.calls ca ON ca.client=c.id
 	 LEFT JOIN sales_uticen.uticen_admin_users u ON u.user_id=ca.caller
-	--LEFT JOIN sales_uticen.agents ag ON ag.id=ca.agent
+    JOIN sales_uticen.agents ag ON ag.user_id=u.user_id
 	LEFT JOIN sales_uticen.agents ag1 ON ag1.id=c.retention_agent
 	LEFT JOIN sales_uticen.uticen_admin_users u1 ON u1.user_id=ag1.user_id
 WHERE

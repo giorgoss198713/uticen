@@ -56,6 +56,7 @@ FROM
 			--JOIN sales_uticen.agents ag ON ag.id=ca.agent
 			--JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
 			JOIN sales_uticen.uticen_admin_users u ON u.user_id=ca.caller
+            JOIN sales_uticen.agents ag ON ag.user_id=u.user_id
         WHERE 
             u.type=3
 			--AND cl.id=1813
