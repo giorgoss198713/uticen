@@ -1,5 +1,5 @@
 WITH distinct_rows AS (
-SELECT DISTINCT client, agent, extract(epoch from (finished_at - accepted_at))::int as duration, created_date, status
+SELECT DISTINCT client, caller as agent, extract(epoch from (finished_at - accepted_at))::int as duration, created_date, status
 from sales_uticen.calls
 )
 select 
@@ -18,8 +18,8 @@ DATE_PART('SECOND', INTERVAL '1 second' * SUM(CASE WHEN dr.duration > 180 THEN d
     ) AS formatted_total_duration
 from distinct_rows dr
 JOIN sales_uticen.uticen_clients_with_brand c ON dr.client=c.id
-JOIN sales_uticen.agents ag ON ag.id=dr.agent
-JOIN sales_uticen.uticen_admin_users u ON u.user_id=ag.user_id
+JOIN sales_uticen.uticen_admin_users u ON u.user_id=dr.agent
+JOIN sales_uticen.agents ag ON ag.user_id=u.user_id
 --JOIN imports.uticen_user_types ut ON u.type=ut.id
 --webphone_status IN ('ANSWERED','callEnded','inCall')
 where
