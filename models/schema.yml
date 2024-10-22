@@ -266,6 +266,17 @@ models:
       config:
           enabled: true
           tags: uticen_agent_name_benjamin
+    - name: uticen_login_array
+      description: "uticen logins in array each client"
+      config:
+          enabled: true
+          tags: uticen_login_array
+    - name: uticen_withdrawals_count
+      description: "uticen counting withdrawals for each client"
+      config:
+          enabled: true
+          tags: uticen_withdrawals_count
+
 
 
 
