@@ -121,7 +121,7 @@ select distinct
  true as is_ftd,
  LOWER(br.name) as brand_name,
  lc.login_count,
-to_jsonb(la.login_array) as login_array,
+ la.login_array::text as login_array,
  CASE WHEN fc.first_pool IS NOT NULL THEN fc.first_pool
  WHEN fc.first_pool IS NULL AND to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' IS NOT NULL THEN
  (CASE WHEN to_jsonb(hierarchy_log::json)->-1->'changes'->>'team'='EN CY' THEN 'English Desk' ELSE to_jsonb(hierarchy_log::json)->-1->'changes'->>'team' END)
